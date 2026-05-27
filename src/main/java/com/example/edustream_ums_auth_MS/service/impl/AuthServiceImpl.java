@@ -4,7 +4,6 @@ import com.example.edustream_ums_auth_MS.client.UserServiceClient;
 import com.example.edustream_ums_auth_MS.dto.requestDTO.LoginRequestDTO;
 import com.example.edustream_ums_auth_MS.dto.responseDTO.LoginResponseDTO;
 import com.example.edustream_ums_auth_MS.service.AuthService;
-import com.example.edustream_ums_user_MS.dto.requestDTO.GetUserByUsernameRequestDTO;
 import com.example.edustream_ums_user_MS.dto.responseDTO.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +25,7 @@ public class AuthServiceImpl implements AuthService {
                 loginRequestDTO.getUsername());
 
 
-        UserResponseDTO responseDTO = userServiceClient.getByUsername(GetUserByUsernameRequestDTO.builder()
-                .username(loginRequestDTO.getUsername())
-                .build()).getData();
+        UserResponseDTO responseDTO = userServiceClient.validateUserCredentials(loginRequestDTO).getData();
 
 
         if (responseDTO == null) {
@@ -39,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
         return LoginResponseDTO.builder()
                 .username(responseDTO.getUsername())
                 .role(responseDTO.getRole())
+                .token("This is your token for now, but it will be generated properly in the future")
                 .build();
 
     }
