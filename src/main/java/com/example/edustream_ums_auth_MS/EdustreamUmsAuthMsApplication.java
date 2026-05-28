@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(
 		scanBasePackages = {
 				"com.example.edustream_ums_auth_MS",
-				"com.example.edustream_lib_common"
+				"com.example.edustream_lib_common",
+				"com.example.edustream_lib_security",
 		})
 @Slf4j
 public class EdustreamUmsAuthMsApplication implements CommandLineRunner {
