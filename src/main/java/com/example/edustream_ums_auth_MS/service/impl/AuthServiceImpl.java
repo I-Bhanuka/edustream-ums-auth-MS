@@ -1,5 +1,6 @@
 package com.example.edustream_ums_auth_MS.service.impl;
 
+import com.example.edustream_lib_security.util.JwtUtil;
 import com.example.edustream_ums_auth_MS.client.UserServiceClient;
 import com.example.edustream_ums_auth_MS.dto.requestDTO.LoginRequestDTO;
 import com.example.edustream_ums_auth_MS.dto.responseDTO.LoginResponseDTO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final UserServiceClient userServiceClient;
+    private final JwtUtil jwtUtil;
 
     @Override
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO){
@@ -36,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
         return LoginResponseDTO.builder()
                 .username(responseDTO.getUsername())
                 .role(responseDTO.getRole())
-                .token("This is your token for now, but it will be generated properly in the future")
+                .token(jwtUtil.generateToken(responseDTO.getUsername(), responseDTO.getRole()))
                 .build();
 
     }
